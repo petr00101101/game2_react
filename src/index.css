@@ -1,0 +1,220 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  color: #252525;
+}
+
+a {
+  text-decoration: none;
+  color: #252525;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.activeLink {
+  fontWeight: bold;
+}
+
+.loginHeader{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.navcontainer, .userContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-decoration: none;
+}
+
+
+
+.navcontainer1, .userContainer1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    text-decoration: none;
+}
+
+.nav li:first-child {
+  padding-left: 0;
+}
+
+.authedUser, .userCounts {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    text-decoration: none;
+}
+
+
+ul {
+  padding-left: 0;
+}
+
+li {
+  list-style-type: none;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.avatar {
+ height: 100px;
+ border-radius: 25px;
+ margin: 10px;
+}
+
+.CatImage{
+    display: block;
+    height: 400px;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.questionPanel {
+  width: 100%;
+  max-width: 590px;
+  min-width: 300px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  border: 1px solid #dad7d7;
+  border-radius: 3px;
+  margin-top: 10px;
+}
+
+.questionBody {
+  width: 100%;
+  min-width: 300px;
+  display: flex;
+  margin: 0 auto;
+}
+
+.userGrid {
+    width: 100%;
+    max-width: 590px;
+    min-width: 300px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    border: 0px solid #dad7d7;
+    border-radius: 3px;
+    margin-top: 10px;
+}
+
+.userContainerBody {
+    width: 100%;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.userBody {
+  width: 100%;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+.submitBtn {
+    width: 100%;
+    border: 2px solid LightGrey;
+    background-color: LightGreen;
+    transition-duration: 0.4s;
+    min-width: 300px;
+
+}
+
+.submitBtn:hover {
+    border: 2px solid LightGreen;
+    background-color: White;
+
+}
+
+.listGroupItemBody {
+    margin: 10px;
+    min-width: 300px;
+}
+
+.listGroupItemBody2 {
+    margin: 10px;
+}
+
+.userListGroupItemBody {
+    margin: 10px;
+    min-width: 300px;
+    border: 0;
+}
+
+.userListGroupItemBody2 {
+    margin: 10px;
+    background-color: LightGreen;
+}
+
+.progressBar {
+    margin: 10px;
+    margin-left: 0px;
+}
+
+.questionResultsHeader {
+    width: 100%;
+    margin: 0;
+    padding-left: 10px;
+    font-weight: bold;
+}
+
+.numberOfVotesText {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.yourVoteText{
+    width: 30%; /
+    display: flex;
+    flex-direction: column;
+    justify-content: right;
+}
+
+.tabs ul>li.active > a,
+.tabs ul > li.active > a:hover,
+.tabs ul > li.active > a:focus{
+    background-color: LightGreen;
+    color: black;
+}
+
+.score{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.signIn{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.selectUser{
+    width: 100%;
+}
+
+.selectUserMenuItem{
+    width: 100%;
+    min-width: 538px;
+}
