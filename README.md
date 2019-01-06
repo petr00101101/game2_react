@@ -8,10 +8,6 @@ To install, type in the terminal:
 
 ### 'npm install'
 
-To run:
-
-### 'npm run'
-
 In the project directory, you can run by typing:
 
 ### `npm start`
