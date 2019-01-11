@@ -41,7 +41,7 @@ class Question extends Component{
 
         const { question } = this.props;
 
-        //if (!question) { return null;}
+        if (!question) { return (<h4><b>404 Page Not Found</b></h4>);}
 
         var votingResult;
         if (question.voted && this.state.isHome === "false" ) {

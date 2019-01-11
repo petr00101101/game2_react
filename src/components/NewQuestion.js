@@ -42,7 +42,7 @@ class NewQuestion extends Component{
 
         const { toHome } = this.state;
 
-        if (toHome === true) {            
+        if (toHome === true) {
             return <Redirect to='/'/>
         }
         else

@@ -15,9 +15,6 @@ class Nav extends Component{
                     <span className='navcontainer'>
                         <span className=' navcontainer1'>
                             <li>
-                            {/*
-                              <NavLink to='/questions' exact activeClassName='activeLink' >
-                          */}
                               <NavLink to='/' exact activeClassName='activeLink' >
                                 Home
                               </NavLink>
@@ -38,10 +35,7 @@ class Nav extends Component{
                                 Hello {users[authedUser].name}
                             </li>
                             <li>
-                            {/*
-                                <NavLink to='/' exact activeClassName='activeLink' onClick={()=>{dispatch(setAuthedUser(null))}}>
-                            */}
-                                <NavLink to='/login' exact activeClassName='activeLink' onClick={()=>{dispatch(setAuthedUser(null))}}>
+                                <NavLink to='/' exact activeClassName='activeLink' onClick={()=>{dispatch(setAuthedUser("-1"))}}>
                                     Logout
                                 </NavLink>
                             </li>

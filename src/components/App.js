@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect, Switch, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { handleInitialData } from '../actions/shared'
 import Nav from './Nav'
@@ -8,48 +8,56 @@ import NewQuestion from './NewQuestion'
 import QuestionList from './QuestionList'
 import LeaderBoard from './LeaderBoard'
 import Login from './Login'
+import PageNotFound from './PageNotFound'
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            formerLocation : this.props.history.location.pathname
+        }
+
+        this.setState = this.setState.bind(this);
+    }
+
     componentDidMount(){
         this.props.dispatch(handleInitialData());
     }
 
     render() {
-
-        const {loading} = this.props;
+        console.log("App, this.props", this.props);
+        const { authedUser, loading } = this.props;
 
         return (
-            <Router>
-
                     <div className="container">
                         {
                             loading
-                            ?  <Fragment>
-{/*
-                                    <Route path='/' exact component={Login} />
-                                    <Redirect to='/' />
-*/}
-                                    <Route path='/login' exact component={Login} />
-                                    <Redirect from='/' to='/login' />
-                                </Fragment>
+                            ? (<Fragment>
+                                    <Switch>
+                                        <Route path='/' exact render={()=>{
+                                            var result = authedUser === null ? <Login formerLocation={this.state.formerLocation} /> : <Login formerLocation={"/"} />;
+                                            return result;
+                                        }}/>
+                                        <Redirect to='/' />
+                                    </Switch>
+                                </Fragment>)
                             :
-                            <Fragment>
+
+                            (<Fragment>
                                 <Nav />
-                                {/*
-                                <Route path='/questions' exact component={QuestionList} />
-                                <Route path='/questions/:id' exact render={()=>(<Question isHome="false" />)} />
-                                */}
-                                <Route path='/' exact component={QuestionList} />
-                                <Route path='/questions/:id' exact render={()=>(<Question isHome="false" />)} />
-                                <Route path='/add' component={NewQuestion} />
-                                <Route path='/leaderboard' component={LeaderBoard} />
-
-
-                            </Fragment>
+                                <Switch>
+                                    <Route path='/' exact component={QuestionList} />
+                                    <Route path='/questions/:id' exact render={()=>(<Question isHome="false" />)} />
+                                    <Route path='/add' component={NewQuestion} />
+                                    <Route path='/leaderboard' component={LeaderBoard} />
+                                    <Route component={PageNotFound} />
+                                </Switch>
+                            </Fragment>)
                         }
                     </div>
 
-            </Router>
+
 
         );
     }
@@ -57,9 +65,12 @@ class App extends Component {
 }
 
 function mapStateToProps({ authedUser }) {
+    console.log("App, this.props: ", this.props)
     return{
-        loading: authedUser === null
+        authedUser,
+        loading: authedUser === null || authedUser === "-1",
+
     }
 }
 
-export default connect(mapStateToProps)(App)
+export default withRouter(connect(mapStateToProps)(App))

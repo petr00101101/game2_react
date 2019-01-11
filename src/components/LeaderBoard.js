@@ -54,6 +54,8 @@ class LeaderBoard extends Component {
 
         const{ orderedUserIds, users } = this.props;
 
+        console.log("this.props.location: ", this.props.location);
+
         return(
 
             <Panel >
@@ -80,6 +82,7 @@ function questionsTotal(user){
 }
 
 function mapStateToProps({authedUser, users, questions}) {
+
     return {
         users,
         orderedUserIds: Object.keys(users)

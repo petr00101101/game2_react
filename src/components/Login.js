@@ -4,10 +4,12 @@ import { Panel, DropdownButton, MenuItem} from 'react-bootstrap'
 import CatImage from '../kittenclipart.gif'
 import { setAuthedUser } from '../actions/authedUser'
 
+import { withRouter } from 'react-router-dom'
+
 class Login extends Component{
 
     menuItems = () => {
-        const {dispatch, users} = this.props;
+        const {dispatch, users, authedUser, formerLocation} = this.props;
 
         var userIds = Object.keys(users);
 
@@ -17,8 +19,7 @@ class Login extends Component{
                 className="selectUserMenuItem"
                 onSelect={()=> {
                     dispatch(setAuthedUser(id));
-                    //this.props.history.push(`/questions`)
-                    this.props.history.push(`/`)
+                    this.props.history.push(formerLocation);
                 }}>
                 {users[id].name}
             </MenuItem>
@@ -53,11 +54,13 @@ class Login extends Component{
     }
 }
 
-function mapStateToProps({authedUser, users}) {
+function mapStateToProps({authedUser, users}, {formerLocation}) {
+
     return{
         users,
-        authedUser
+        authedUser,
+        formerLocation
     }
 }
 
-export default connect(mapStateToProps)(Login);
+export default withRouter(connect(mapStateToProps)(Login));
