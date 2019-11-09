@@ -6,10 +6,9 @@ import Question from './Question'
 class QuestionList extends Component {
 
     render() {
-
         return (
-            <Tabs defaultActiveKey={1} className="tabs" id="tabs">
-                <Tab eventKey={1} title="Unanswered Questions" id="Unanswered Questions">
+            <Tabs defaultActiveKey={1} className="tabs" id="tabs">                
+                <Tab eventKey={1} title="Unanswered Questions" >
                     <ul>
                         {this.props.unansweredQuestionIds
                             .map( (id) => (
@@ -18,8 +17,8 @@ class QuestionList extends Component {
                             </li>
                         ))}
                     </ul>
-                </Tab>
-                <Tab eventKey={2} title="Answered Questions" id="Answered Questions">
+                </Tab>                
+                <Tab eventKey={2} title="Answered Questions" >
                 <ul>
                     {this.props.answeredQuestionIds
                         .map( (id) => (

@@ -6,11 +6,7 @@ import { handleOnSubmitQuestionAnswer } from '../actions/questions'
 
 import { withRouter } from 'react-router-dom'
 
-class Question extends Component{
-
-    state = {
-        isHome: this.props.isHome
-    };
+class Question extends Component{   
 
     handleOnSubmitQuestionAnswer = (e) => {
         e.preventDefault();
@@ -38,13 +34,12 @@ class Question extends Component{
     }
 
     render(){
-
         const { question } = this.props;
 
         if (!question) { return (<h4><b>404 Page Not Found</b></h4>);}
 
         var votingResult;
-        if (question.voted && this.state.isHome === "false" ) {
+        if (question.voted && this.props.isHome === "false" ) {
 
             var progress = Math.floor(100 * question.optionOneVotes/question.totalVotes);
             var complProgress = 100 - progress;
@@ -110,7 +105,7 @@ class Question extends Component{
 
             <Panel className="questionPanel">
                 <Panel.Heading>
-                { (question.voted && this.state.isHome === "false") ?
+                { (question.voted && this.props.isHome === "false") ?
                     (<b>Asked by {question.name}</b>)
                     : ( <b>{question.name} asks:</b>)
                 }
@@ -121,13 +116,13 @@ class Question extends Component{
                         alt={`Avatar of ${question.name}`}
                         className='avatar'
                     />
-                    { (question.voted && this.state.isHome === "false") ?
+                    { (question.voted && this.props.isHome === "false") ?
                         (<ListGroup>
                                 <h2 className='questionResultsHeader'>Results</h2>
                                 {votingResult}
                         </ListGroup>)
                         :
-                        ( this.state.isHome === "false" ) ?
+                        ( this.props.isHome === "false" ) ?
                             (<FormGroup>
                                 <Radio name="radioGroup" value="optionOne">
                                     {question.optionOneText}
@@ -145,11 +140,8 @@ class Question extends Component{
                                 <br/>
 
                                 <Button type="submit" className="submitBtn"
-                                    onClick={()=>{
-
-                                        this.setState({ isHome: "false" });
+                                    onClick={()=>{                                        
                                         this.props.history.push('/questions/' + question.id);
-
                                 }}>
                                     View Poll
                                 </Button>
@@ -157,7 +149,6 @@ class Question extends Component{
                     }
                 </Panel.Body>
             </Panel>
-
         )
     }
 }

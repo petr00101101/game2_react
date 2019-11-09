@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Panel, DropdownButton, MenuItem} from 'react-bootstrap'
-import CatImage from '../kittenclipart.gif'
+import image from '../assets/colorful_wall.jpg'
 import { setAuthedUser } from '../actions/authedUser'
 
 import { withRouter } from 'react-router-dom'
@@ -38,9 +38,9 @@ class Login extends Component{
                 </Panel.Heading>
                 <Panel.Body className="signIn">
                     <img
-                        src={CatImage}
-                        alt={`Cat`}
-                        className='CatImage'
+                        src={image}
+                        alt={`wall`}
+                        className='wallImage'
                     />
 
                     <DropdownButton title="Sign In"

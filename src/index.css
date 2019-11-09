@@ -17,7 +17,7 @@ a {
 }
 
 .activeLink {
-  fontWeight: bold;
+  font-weight: bold;
 }
 
 .loginHeader{
@@ -71,12 +71,11 @@ li {
  margin: 10px;
 }
 
-.CatImage{
-    display: block;
-    height: 400px;
-    margin-left: auto;
-    margin-right: auto;
-
+.wallImage{
+  display: block;  
+  width: 538px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .questionPanel {
@@ -184,7 +183,7 @@ li {
 }
 
 .yourVoteText{
-    width: 30%; /
+    width: 30%; 
     display: flex;
     flex-direction: column;
     justify-content: right;
