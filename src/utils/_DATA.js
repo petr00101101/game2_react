@@ -1,46 +1,46 @@
 let users = {
-  sarahedo: {
-    id: 'sarahedo',
-    name: 'Sarah Edo',
+  '5dc72349d5aa81af5650f0e5': {
+    id: '5dc72349d5aa81af5650f0e5',
+    name: 'Sarah S.',
     avatarURL: "https://tylermcginnis.com/would-you-rather/sarah.jpg",
     answers: {
-      "8xf0y6ziyjabvozdd253nd": 'optionOne',
-      "6ni6ok3ym7mf1p33lnez": 'optionTwo',
-      "am8ehyc8byjqgar0jgpub9": 'optionTwo',
-      "loxhs1bqm25b708cmbf3g": 'optionTwo'
+      "5dc720dc0f051afb6fd6db41": 'optionOne',
+      "5dc721d182ef37213dfbe9aa": 'optionTwo',
+      "5dc7220e82ef37213dfbe9ab": 'optionTwo',
+      "5dc72255d5aa81af5650f0e2": 'optionTwo'
     },
-    questions: ['8xf0y6ziyjabvozdd253nd', 'am8ehyc8byjqgar0jgpub9']
+    questions: ['5dc720dc0f051afb6fd6db41', '5dc7220e82ef37213dfbe9ab']
   },
-  tylermcginnis: {
-    id: 'tylermcginnis',
-    name: 'Tyler McGinnis',
+  '5dc72349d5aa81af5650f0e6': {
+    id: '5dc72349d5aa81af5650f0e6',
+    name: 'Tyler T.',
     avatarURL: "https://tylermcginnis.com/would-you-rather/tyler.jpg",
     answers: {
-      "vthrdm985a262al8qx3do": 'optionOne',
-      "xj352vofupe1dqz9emx13r": 'optionTwo',
+      "5dc72294d5aa81af5650f0e3": 'optionOne',
+      "5dc722c0d5aa81af5650f0e4": 'optionTwo',
     },
-    questions: ['loxhs1bqm25b708cmbf3g', 'vthrdm985a262al8qx3do'],
+    questions: ['5dc72255d5aa81af5650f0e2', '5dc72294d5aa81af5650f0e3'],
   },
-  johndoe: {
-    id: 'johndoe',
-    name: 'John Doe',
+  '5dc72349d5aa81af5650f0e7': {
+    id: '5dc72349d5aa81af5650f0e7',
+    name: 'John J.',
     avatarURL: "https://tylermcginnis.com/would-you-rather/dan.jpg",
     answers: {
-      "xj352vofupe1dqz9emx13r": 'optionOne',
-      "vthrdm985a262al8qx3do": 'optionTwo',
-      "6ni6ok3ym7mf1p33lnez": 'optionTwo'
+      "5dc722c0d5aa81af5650f0e4": 'optionOne',
+      "5dc72294d5aa81af5650f0e3": 'optionTwo',
+      "5dc721d182ef37213dfbe9aa": 'optionTwo'
     },
-    questions: ['6ni6ok3ym7mf1p33lnez', 'xj352vofupe1dqz9emx13r'],
+    questions: ['5dc721d182ef37213dfbe9aa', '5dc722c0d5aa81af5650f0e4'],
   }
 }
 
 let questions = {
-  "8xf0y6ziyjabvozdd253nd": {
-    id: '8xf0y6ziyjabvozdd253nd',
-    author: 'sarahedo',
+  "5dc720dc0f051afb6fd6db41": {
+    id: '5dc720dc0f051afb6fd6db41',
+    author: '5dc72349d5aa81af5650f0e5',
     timestamp: 1467166872634,
     optionOne: {
-      votes: ['sarahedo'],
+      votes: ['5dc72349d5aa81af5650f0e5'],
       text: 'have horrible short term memory',
     },
     optionTwo: {
@@ -48,68 +48,68 @@ let questions = {
       text: 'have horrible long term memory'
     }
   },
-  "6ni6ok3ym7mf1p33lnez": {
-    id: '6ni6ok3ym7mf1p33lnez',
-    author: 'johndoe',
+  "5dc721d182ef37213dfbe9aa": {
+    id: '5dc721d182ef37213dfbe9aa',
+    author: '5dc72349d5aa81af5650f0e7',
     timestamp: 1468479767190,
     optionOne: {
       votes: [],
       text: 'become a superhero',
     },
     optionTwo: {
-      votes: ['johndoe', 'sarahedo'],
+      votes: ['5dc72349d5aa81af5650f0e7', '5dc72349d5aa81af5650f0e5'],
       text: 'become a supervillain'
     }
   },
-  "am8ehyc8byjqgar0jgpub9": {
-    id: 'am8ehyc8byjqgar0jgpub9',
-    author: 'sarahedo',
+  "5dc7220e82ef37213dfbe9ab": {
+    id: '5dc7220e82ef37213dfbe9ab',
+    author: '5dc72349d5aa81af5650f0e5',
     timestamp: 1488579767190,
     optionOne: {
       votes: [],
       text: 'be telekinetic',
     },
     optionTwo: {
-      votes: ['sarahedo'],
+      votes: ['5dc72349d5aa81af5650f0e5'],
       text: 'be telepathic'
     }
   },
-  "loxhs1bqm25b708cmbf3g": {
-    id: 'loxhs1bqm25b708cmbf3g',
-    author: 'tylermcginnis',
+  "5dc72255d5aa81af5650f0e2": {
+    id: '5dc72255d5aa81af5650f0e2',
+    author: '5dc72349d5aa81af5650f0e6',
     timestamp: 1482579767190,
     optionOne: {
       votes: [],
        text: 'be a front-end developer',      
     },
     optionTwo: {
-      votes: ['sarahedo'],
+      votes: ['5dc72349d5aa81af5650f0e5'],
       text: 'be a back-end developer'
     }
   },
-  "vthrdm985a262al8qx3do": {
-    id: 'vthrdm985a262al8qx3do',
-    author: 'tylermcginnis',
+  "5dc72294d5aa81af5650f0e3": {
+    id: '5dc72294d5aa81af5650f0e3',
+    author: '5dc72349d5aa81af5650f0e6',
     timestamp: 1489579767190,
     optionOne: {
-      votes: ['tylermcginnis'],
+      votes: ['5dc72349d5aa81af5650f0e6'],
       text: 'find $50 yourself',
     },
     optionTwo: {
-      votes: ['johndoe'],
+      votes: ['5dc72349d5aa81af5650f0e7'],
       text: 'have your best friend find $500'
     }
   },
-  "xj352vofupe1dqz9emx13r": {
-    id: 'xj352vofupe1dqz9emx13r',
-    author: 'johndoe',
+  "5dc722c0d5aa81af5650f0e4": {
+    id: '5dc722c0d5aa81af5650f0e4',
+    author: '5dc72349d5aa81af5650f0e7',
     timestamp: 1493579767190,
     optionOne: {
-      votes: ['johndoe'],
+      votes: ['5dc72349d5aa81af5650f0e7'],
       text: 'write JavaScript',
     },
     optionTwo: {
-      votes: ['tylermcginnis'],
+      votes: ['5dc72349d5aa81af5650f0e6'],
       text: 'write Swift'
     }
   },
