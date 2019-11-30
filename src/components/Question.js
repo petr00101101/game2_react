@@ -13,8 +13,8 @@ class Question extends Component{
 
         const{dispatch, authedUser, question } = this.props;
 
-        if (!document.querySelector('[name="radioGroup"]:checked')) { return null;}
-
+        if (!document.querySelector('[name="radioGroup"]:checked')) { return null;}       
+        
         dispatch(handleOnSubmitQuestionAnswer({
             authedUser: authedUser,
             qid: question.id,
@@ -137,8 +137,7 @@ class Question extends Component{
                                 <div><b>Would You Rather</b></div>
                                 <br/>
                                 <div>...{this.questionPreview(question.optionOneText)}...</div>
-                                <br/>
-
+                                <br/>                                
                                 <Button type="submit" className="submitBtn"
                                     onClick={()=>{                                        
                                         this.props.history.push('/questions/' + question.id);
@@ -155,9 +154,15 @@ class Question extends Component{
 
 function mapStateToProps({authedUser, users, questions}, props) {
 
-    const question = props.id? questions[props.id] : questions[props.location.pathname.slice(11)];
+    var param = props.id? props.id : props.location.pathname.slice(11);
 
-    const author = !question ? [] : users[question.author];
+    const question = questions.filter( (question)=> question._id == param )[0];
+    
+    var usersArray = [];
+    for(var i in users)
+        usersArray.push(users[i]);
+    
+    const author = !question ? [] : usersArray.filter(user => user._id == question.author)[0];
 
     return {
         authedUser,

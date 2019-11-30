@@ -9,16 +9,16 @@ import { withRouter } from 'react-router-dom'
 class Login extends Component{
 
     menuItems = () => {
-        const {dispatch, users, authedUser, formerLocation} = this.props;
-
+        const {dispatch, users, formerLocation} = this.props;
+        
         var userIds = Object.keys(users);
 
         var result = userIds.map( (id) => (
-            <MenuItem key={id}
-                eventKey={id}
+            <MenuItem key={users[id]._id}
+                eventKey={users[id]._id}
                 className="selectUserMenuItem"
                 onSelect={()=> {
-                    dispatch(setAuthedUser(id));
+                    dispatch(setAuthedUser(users[id]._id));
                     this.props.history.push(formerLocation);
                 }}>
                 {users[id].name}

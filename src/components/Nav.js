@@ -32,7 +32,7 @@ class Nav extends Component{
                         </span>
                         <span className= 'authedUser'>
                             <li>
-                                Hello {users[authedUser].name}
+                                Hello {users.filter(user => user._id ==authedUser)[0].name}
                             </li>
                             <li>
                                 <NavLink to='/' exact activeClassName='activeLink' onClick={()=>{dispatch(setAuthedUser("-1"))}}>
@@ -47,7 +47,7 @@ class Nav extends Component{
     }
 }
 
-function mapStateToProps({ authedUser, users }) {
+function mapStateToProps({ authedUser, users }) {    
     return{
         authedUser,
         users

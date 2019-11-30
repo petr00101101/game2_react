@@ -44,10 +44,10 @@ function mapStateToProps( {questions, authedUser} ) {
     for (var i=0; i<questionsIds.length; i++) {
         var qid = questionsIds[i];
         if (questions[qid].optionOne.votes.includes(authedUser) || questions[qid].optionTwo.votes.includes(authedUser)){
-            answeredQuestionIds.push(qid);
+            answeredQuestionIds.push(questions[qid]._id);
         }
-        else unansweredQuestionIds.push(qid);
-    }
+        else unansweredQuestionIds.push(questions[qid]._id);
+    }    
 
     return {
         unansweredQuestionIds,

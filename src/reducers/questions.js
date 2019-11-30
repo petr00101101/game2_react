@@ -1,32 +1,30 @@
 import { RECEIVE_QUESTIONS, SUBMIT_QUESTION_ANSWER, ADD_QUESTION } from '../actions/questions'
 
-export default function questions(state = {}, action) {
+export default function questions(state = [], action) {
     switch (action.type) {
         case RECEIVE_QUESTIONS:
-            return {
-                ...state,
-                ...action.questions
-            }
+            return [...action.questions]            
         case SUBMIT_QUESTION_ANSWER:
             const { authedUser, qid, answer } = action;
-            return {
-                ...state,
-                [qid]: {
-                    ...state[qid],
+            
+            let questionToUpdate = state.filter((q)=>{return q._id == qid})[0];            
+                        
+            return [
+                ...state.filter((q)=>{return q._id !== qid}),
+                {
+                    ...questionToUpdate,
                     [answer]: {
-                        ...state[qid][answer],
-                        votes: state[qid][answer].votes.concat([authedUser])
+                        ...questionToUpdate[answer],
+                        votes: questionToUpdate[answer].votes.concat([authedUser])                        
                     }
-
                 }
-            }
+            ]
         case ADD_QUESTION:
             const { question } = action;
-            return {
+            return [
                 ...state,
-                [question.id] : question
-            }
-
+                question
+            ]
         default:
             return state;
     }

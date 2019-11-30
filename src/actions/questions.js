@@ -1,6 +1,6 @@
-import { showLoading, hideLoading } from 'react-redux-loading'
 import { submitQuestionAnswerUser, addQuestionUser } from './users'
 import { saveQuestionAnswer, saveQuestion } from '../utils/api'
+
 
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS'
 export const SUBMIT_QUESTION_ANSWER = 'SUBMIT_QUESTION_ANSWER'
@@ -30,37 +30,22 @@ function addQuestion(question) {
 };
 
 export function handleAddNewQuestion ({ optionOneText, optionTwoText, author }) {
-
-    return (dispatch, getState) => {
-        dispatch(showLoading());
-        const { authedUser } = getState();
-
-        return saveQuestion({
+    return async (dispatch, getState) => {
+        var result = await saveQuestion({
             optionOneText,
             optionTwoText,
             author
-        })
-        .then( (question) => {
-            dispatch(addQuestion(question));
-            dispatch(addQuestionUser(question));
-        })
-        .then(()=>dispatch(hideLoading()));;
-
-
+        });        
+        dispatch(addQuestion(result));
+        dispatch(addQuestionUser(result));
     }
 }
 
 export function handleOnSubmitQuestionAnswer(info) {
-    return (dispatch) => {
-
+    return async (dispatch) => {
         dispatch(submitQuestionAnswer(info));
         dispatch(submitQuestionAnswerUser(info));
-
-        return saveQuestionAnswer(info)
-            .catch( (e)=> {
-                console.warn('Error in handleOnSubmitQuestionAnswer: ', e);
-                alert('The was an error submitting your answer. Try again.');
-            })
-
+        
+        var result = await saveQuestionAnswer(info);        
     }
 }

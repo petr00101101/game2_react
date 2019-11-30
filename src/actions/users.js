@@ -19,10 +19,10 @@ export function submitQuestionAnswerUser({authedUser, qid, answer}){
 }
 
 export function addQuestionUser(question){
-    const { author, id } = question
+    const { author, _id } = question
     return {
         type: ADD_QUESTION_USER,
         author,
-        id
+        id: _id
     }
 }

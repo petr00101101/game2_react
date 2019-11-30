@@ -51,13 +51,9 @@ function User(props){
 class LeaderBoard extends Component {
 
     render() {
-
-        const{ orderedUserIds, users } = this.props;
-
-        console.log("this.props.location: ", this.props.location);
+        const{ orderedUserIds, users } = this.props;        
 
         return(
-
             <Panel >
                 <ul>
                     { orderedUserIds.map( (id) => (
@@ -67,7 +63,6 @@ class LeaderBoard extends Component {
                     ))}
                 </ul>
             </Panel>
-
         )
     }
 

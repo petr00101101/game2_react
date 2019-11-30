@@ -5,13 +5,13 @@ export function formatDate (timestamp) {
 }
 
 export function formatQuestion (question, author, authedUser) {
-    const { id, optionOne, optionTwo } = question;
+    const { _id, optionOne, optionTwo } = question;
     const { name, avatarURL } = author;
     var voted = optionOne.votes.indexOf( authedUser ) !== -1 || optionTwo.votes.indexOf( authedUser ) !== -1;
     var chosenVote = voted ? (optionOne.votes.indexOf( authedUser ) !== -1 ? "optionOne" : "optionTwo" ) : null;
 
     return {
-        id,
+        id: _id,
         name,
         voted,
         chosenVote,

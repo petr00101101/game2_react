@@ -2,9 +2,15 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Panel, FormGroup, FormControl, Button } from 'react-bootstrap'
 import { handleAddNewQuestion } from '../actions/questions'
-import { Redirect } from 'react-router-dom'
+import { withRouter, Redirect } from 'react-router-dom'
+import { showLoading, hideLoading } from 'react-redux-loading'
 
 class NewQuestion extends Component{
+
+    _isMounted = false;
+
+    componentWillUnmount() { this._isMounted = false; }
+    componentDidMount() { this._isMounted = true;}
 
     state = {
         optionOne: "",
@@ -19,9 +25,11 @@ class NewQuestion extends Component{
         });
     }
 
-    handleOnAddNewQuestion = () => {
-
+    handleOnAddNewQuestion = async (e) => {
+        e.preventDefault();
         const { dispatch, authedUser } = this.props;
+        
+        dispatch(showLoading());
 
         if (this.state.optionOne.length <= 0 || this.state.optionTwo.length <= 0) {
             this.setState({ validation: "error" }); return;
@@ -35,15 +43,20 @@ class NewQuestion extends Component{
             optionTwoText: this.state.optionTwo,
             author: authedUser
         }))
-        .then( () => this.setState({toHome: true})  )
+            
+        if (this._isMounted) {this.setState({toHome: true})}; 
+    
+        dispatch(hideLoading());       
+        
     }
 
     render(){
 
         const { toHome } = this.state;
 
-        if (toHome === true) {
-            return <Redirect to='/'/>
+        if (toHome === true) {            
+            this.props.history.push('/');
+            return <p></p>
         }
         else
         return(
@@ -85,10 +98,10 @@ class NewQuestion extends Component{
 
 };
 
-function mapStateToProps({authedUser, users, questions}) {
+function mapStateToProps({authedUser}) {
     return {
         authedUser,
     }
 }
 
-export default connect(mapStateToProps)(NewQuestion)
+export default withRouter(connect(mapStateToProps)(NewQuestion))
