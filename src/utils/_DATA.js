@@ -66,7 +66,7 @@ export async function _saveQuestion (question) {
     
   }
   catch(error) {
-    return console.error("_saveQuestion error:", rej)
+    return console.error("_saveQuestion error:", error)
   }    
   return json;
 }
@@ -88,7 +88,7 @@ export async function _saveQuestionAnswer ({ authedUser, qid, answer }) {
     json = await response.json();    
   }
   catch(error) {
-    return console.error("_saveQuestionAnswer error:", rej)
+    return console.error("_saveQuestionAnswer error:", error)
   }    
 
   return json;  
