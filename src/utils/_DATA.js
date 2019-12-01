@@ -85,7 +85,8 @@ export async function _saveQuestionAnswer ({ authedUser, qid, answer }) {
       },
       body: JSON.stringify(data)
     })    
-    json = await response.json();    
+    json = response;
+    
   }
   catch(error) {
     return console.error("_saveQuestionAnswer error:", error)
