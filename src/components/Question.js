@@ -101,55 +101,58 @@ class Question extends Component{
             )}
         }
 
-        return(
-
+        var questionObj = (
             <Panel className="questionPanel">
-                <Panel.Heading>
-                { (question.voted && this.props.isHome === "false") ?
-                    (<b>Asked by {question.name}</b>)
-                    : ( <b>{question.name} asks:</b>)
-                }
-                </Panel.Heading>
-                <Panel.Body className="questionBody">
-                    <img
-                        src={question.avatar}
-                        alt={`Avatar of ${question.name}`}
-                        className='avatar'
-                    />
+                    <Panel.Heading>
                     { (question.voted && this.props.isHome === "false") ?
-                        (<ListGroup>
-                                <h2 className='questionResultsHeader'>Results</h2>
-                                {votingResult}
-                        </ListGroup>)
-                        :
-                        ( this.props.isHome === "false" ) ?
-                            (<FormGroup>
-                                <Radio name="radioGroup" value="optionOne">
-                                    {question.optionOneText}
-                                </Radio>
-                                <Radio name="radioGroup" value="optionTwo">
-                                    {question.optionTwoText}
-                                </Radio>
-                                <Button type="submit" className="submitBtn" onClick={this.handleOnSubmitQuestionAnswer}>Submit</Button>
-                            </FormGroup>)
-                            :
-                            (<FormGroup>
-                                <div><b>Would You Rather</b></div>
-                                <br/>
-                                <div>...{this.questionPreview(question.optionOneText)}...</div>
-                                <br/>                                
-                                <Button type="submit" className="submitBtn"
-                                    onClick={()=>{                                        
-                                        this.props.history.push('/questions/' + question.id);
-                                }}>
-                                    View Poll
-                                </Button>
-                            </FormGroup>)
+                        (<b>Asked by {question.name}</b>)
+                        : ( <b>{question.name} asks:</b>)
                     }
-                </Panel.Body>
-            </Panel>
-        )
-    }
+                    </Panel.Heading>
+                    <Panel.Body className="questionBody">
+                        <img
+                            src={question.avatar}
+                            alt={`Avatar of ${question.name}`}
+                            className='avatar'
+                        />
+                        { (question.voted && this.props.isHome === "false") ?
+                            (<ListGroup>
+                                    <h2 className='questionResultsHeader'>Results</h2>
+                                    {votingResult}
+                            </ListGroup>)
+                            :
+                            ( this.props.isHome === "false" ) ?
+                                (<FormGroup>
+                                    <Radio name="radioGroup" value="optionOne">
+                                        {question.optionOneText}
+                                    </Radio>
+                                    <Radio name="radioGroup" value="optionTwo">
+                                        {question.optionTwoText}
+                                    </Radio>
+                                    <Button type="submit" className="submitBtn" onClick={this.handleOnSubmitQuestionAnswer}>Submit</Button>
+                                </FormGroup>)
+                                :
+                                (<FormGroup>
+                                    <div><b>Would You Rather</b></div>
+                                    <br/>
+                                    <div>...{this.questionPreview(question.optionOneText)}...</div>
+                                    <br/>                                
+                                    <Button type="submit" className="submitBtn"
+                                        onClick={()=>{                                        
+                                            this.props.history.push('/questions/' + question.id);
+                                    }}>
+                                        View Poll
+                                    </Button>
+                                </FormGroup>)
+                        }
+                    </Panel.Body>
+                </Panel>                
+        );
+
+        var result = this.props.isHome === "false" ? <div className='flexContainerRowCenter'>{questionObj}</div> : (questionObj);
+
+        return(result);                
+     }
 }
 
 function mapStateToProps({authedUser, users, questions}, props) {

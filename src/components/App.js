@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Route, Switch, withRouter } from 'react-router-dom'
+import { Route, Switch, withRouter, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { handleInitialData } from '../actions/shared'
 import Nav from './Nav'
@@ -9,6 +9,7 @@ import QuestionList from './QuestionList'
 import LeaderBoard from './LeaderBoard'
 import Login from './Login'
 import PageNotFound from './PageNotFound'
+import PrivateRoute from './PrivateRoute'
 
 class App extends Component {
     constructor(props) {
@@ -22,31 +23,39 @@ class App extends Component {
 
     render() {        
         const { authedUser, loading } = this.props;
+        
+        
 
         return (
-            <div className="container">
-            {loading ?
+            
+            loading ?
                 (<Fragment>
-                    <Switch>
-                        <Route path='/' exact render={()=>{                                                                                         
-                            return <Login formerLocation={"/"} />;                                            
-                        }}/>
-                        <Route component={PageNotFound}/>                                        
+                    <Switch>                                                
+                        <Route exact path='/login' component={Login} />
+                        <Route>
+                            <Redirect to='/login' />
+                        </Route>
+                        <Route component={PageNotFound}/>
                     </Switch>
                 </Fragment>)
                 :
                 (<Fragment>
                     <Nav />
                     <Switch>
-                        <Route path='/' exact component={QuestionList} />
+                        <PrivateRoute path='/home' exact component={QuestionList}/>
+                        <PrivateRoute path='/home/questions/:id' isHome="false" component={Question} />)} />
+                        <PrivateRoute path='/home/add' component={NewQuestion} />
+                        <PrivateRoute path='/home/leaderboard' component={LeaderBoard} />
+                        <Route component={PageNotFound}/>
+
+                        {/* <Route path='/' exact component={QuestionList} />
                         <Route path='/questions/:id' render={()=>(<Question isHome="false" />)} />
                         <Route path='/add' component={NewQuestion} />
                         <Route path='/leaderboard' component={LeaderBoard} />
-                        <Route component={PageNotFound}/>                                    
+                        <Route component={PageNotFound}/>                                     */}
                     </Switch>
-                </Fragment>)
-            }
-            </div>
+                </Fragment>)           
+            
         );
     }
 }

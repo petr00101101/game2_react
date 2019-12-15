@@ -60,39 +60,40 @@ class NewQuestion extends Component{
         }
         else
         return(
-
-            <Panel className="questionPanel">
-                <Panel.Heading>
-                    <div style={{textAlign:'center'}}><h2><b>Create New Question</b></h2></div>
-                </Panel.Heading>
-                <Panel.Body>
-                    <div>Complete the question:</div><br/>
-                    <div><h4><b>Would you rather ...</b></h4></div>
-                    <br/>
-                    <FormGroup validationState={this.state.validation}>
-                        <FormControl
-                            type="text"
-                            value={this.state.optionOne}
-                            placeholder="Enter Option One Text Here"
-                            onChange={(e) => this.handleChange(e,'optionOne')}
-                        />
-                        <div style={{textAlign:'center'}}><h4><b>OR</b></h4></div>
-                        <FormControl
-                            type="text"
-                            value={this.state.optionTwo}
-                            placeholder="Enter Option Two Text Here"
-                            onChange={(e) => this.handleChange(e,'optionTwo')}
-                        />
+            <div className='flexContainerRowCenter'>
+                <Panel className="questionPanel">
+                    <Panel.Heading>
+                        <div style={{textAlign:'center'}}><h2><b>Create New Question</b></h2></div>
+                    </Panel.Heading>
+                    <Panel.Body>
+                        <div>Complete the question:</div><br/>
+                        <div><h4><b>Would you rather ...</b></h4></div>
                         <br/>
-                        <Button
-                            type="submit"
-                            className="submitBtn"
-                            onClick={this.handleOnAddNewQuestion}>
-                            Submit
-                        </Button>
-                    </FormGroup>
-                </Panel.Body>
-            </Panel>
+                        <FormGroup validationState={this.state.validation}>
+                            <FormControl
+                                type="text"
+                                value={this.state.optionOne}
+                                placeholder="Enter Option One Text Here"
+                                onChange={(e) => this.handleChange(e,'optionOne')}
+                            />
+                            <div style={{textAlign:'center'}}><h4><b>OR</b></h4></div>
+                            <FormControl
+                                type="text"
+                                value={this.state.optionTwo}
+                                placeholder="Enter Option Two Text Here"
+                                onChange={(e) => this.handleChange(e,'optionTwo')}
+                            />
+                            <br/>
+                            <Button
+                                type="submit"
+                                className="submitBtn"
+                                onClick={this.handleOnAddNewQuestion}>
+                                Submit
+                            </Button>
+                        </FormGroup>
+                    </Panel.Body>
+                </Panel>
+            </div>
         )
     };
 

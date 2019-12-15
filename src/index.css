@@ -1,20 +1,42 @@
+html{
+  height: 100%;
+}
+
 body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
   color: #252525;
+  height: 100%;
 }
-
+/*
 a {
   text-decoration: none;
   color: #252525;
-}
+} */
 
-.container {
+/*.container {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 10px;
+  padding: 10px; */
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center; */
+/* } */
+
+/* body{
+  margin: auto;
+  padding: auto;
+  font-family: sans-serif;
+  color: #252525;
 }
+a{
+  color: #252525;
+}
+.container{
+  margin: auto;
+  
+} */
 
 .activeLink {
   font-weight: bold;
@@ -56,13 +78,18 @@ a {
 
 
 ul {
-  padding-left: 0;
+  padding-left: 0;  
 }
 
 li {
   list-style-type: none;
   padding: 10px;
   text-decoration: none;
+  margin: 0;
+  border: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .avatar {
@@ -82,13 +109,14 @@ li {
   width: 100%;
   max-width: 590px;
   min-width: 300px;
-  padding: 10px;
+  padding: 0px;
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
+  margin: 0;
   border: 1px solid #dad7d7;
   border-radius: 3px;
-  margin-top: 10px;
+  /* margin-top: 0px; */
+  /* justify-content: center; */
 }
 
 .questionBody {
@@ -96,6 +124,9 @@ li {
   min-width: 300px;
   display: flex;
   margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .userGrid {
@@ -128,11 +159,11 @@ li {
 }
 
 .submitBtn {
-    width: 100%;
-    border: 2px solid LightGrey;
-    background-color: LightGreen;
-    transition-duration: 0.4s;
-    min-width: 300px;
+  width: 100%;
+  border: 2px solid LightGrey;
+  background-color: LightGreen;
+  transition-duration: 0.4s;
+  min-width: 300px;
 
 }
 
@@ -217,3 +248,55 @@ li {
     width: 100%;
     min-width: 538px;
 }
+
+.loginFormContainer {  
+  border: 0;
+  display: flex;   
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  /* height: 100%; */
+ 
+  /* min-width: 300px; */
+}
+
+.loginFormBackground {  
+  /* width: 60%; */
+  width: 420px;
+  height: 420px;
+  display: flex;   
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url('./assets/thought-bubble_resize.jpg');
+}
+
+.loginFormItem {
+  display: flex;   
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+}
+
+.submitLoginBtn {
+  width: 80%;
+  border: 2px solid LightGrey;
+  background-color: LightGreen;
+  transition-duration: 0.4s;
+  min-width: 200px;
+}
+
+.navMarginBottom {
+  margin-bottom: 10px;
+}
+
+.flexContainerRowCenter {
+  margin: 0;
+  border: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+

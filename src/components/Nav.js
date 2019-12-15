@@ -15,17 +15,17 @@ class Nav extends Component{
                     <span className='navcontainer'>
                         <span className=' navcontainer1'>
                             <li>
-                              <NavLink to='/' exact activeClassName='activeLink' >
+                              <NavLink to='/home' exact activeClassName='activeLink' >
                                 Home
                               </NavLink>
                             </li>
                             <li>
-                              <NavLink to='/add' activeClassName='activeLink'>
+                              <NavLink to='/home/add' activeClassName='activeLink'>
                                 New Question
                               </NavLink>
                             </li>
                             <li>
-                              <NavLink to='/leaderboard' activeClassName='activeLink'>
+                              <NavLink to='/home/leaderboard' activeClassName='activeLink'>
                                 Leader Board
                               </NavLink>
                             </li>
@@ -35,8 +35,8 @@ class Nav extends Component{
                                 Hello {users.filter(user => user._id ==authedUser)[0].name}
                             </li>
                             <li>
-                                <NavLink to='/' exact activeClassName='activeLink' onClick={()=>{dispatch(setAuthedUser("-1"))}}>
-                                    Logout
+                                <NavLink to='/login' exact activeClassName='activeLink' onClick={()=>{dispatch(setAuthedUser("-1"))}}>
+                                    Logout                                    
                                 </NavLink>
                             </li>
                         </span>
