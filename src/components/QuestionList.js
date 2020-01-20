@@ -2,8 +2,17 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Tabs, Tab } from 'react-bootstrap'
 import Question from './Question'
+import Cookies from 'js-cookie'
+import { handleInitialData } from '../actions/shared.js'
 
 class QuestionList extends Component {
+
+    async componentDidMount(){
+        console.log('QuestionList componentDidMount');
+        const {dispatch} = this.props;
+        var token = Cookies.get('id');
+        await dispatch(handleInitialData(token));
+    }
 
     render() {
         return (
@@ -51,7 +60,7 @@ function mapStateToProps( {questions, authedUser} ) {
 
     return {
         unansweredQuestionIds,
-        answeredQuestionIds
+        answeredQuestionIds        
     }
 }
 

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Panel, ListGroupItem, ListGroup } from 'react-bootstrap'
+import Cookies from 'js-cookie'
+import { handleInitialData } from '../actions/shared.js'
 
 function User(props){
     const{user} = props;
@@ -50,6 +52,13 @@ function User(props){
 
 class LeaderBoard extends Component {
 
+    async componentDidMount(){
+        console.log('LeaderBoard componentDidMount');        
+        const {dispatch} = this.props;
+        var token = Cookies.get('id');
+        await dispatch(handleInitialData(token));
+    }
+
     render() {
         const{ orderedUserIds, users } = this.props;        
 
@@ -76,7 +85,7 @@ function questionsTotal(user){
     return questionsAnswered(user) + user.questions.length;
 }
 
-function mapStateToProps({authedUser, users, questions}) {
+function mapStateToProps({users}) {
 
     return {
         users,

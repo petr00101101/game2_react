@@ -2,21 +2,15 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Panel, FormGroup, FormControl, Button } from 'react-bootstrap'
 import { handleAddNewQuestion } from '../actions/questions'
-import { withRouter, Redirect } from 'react-router-dom'
-import { showLoading, hideLoading } from 'react-redux-loading'
+import { withRouter } from 'react-router-dom'
+import Cookies from 'js-cookie'
 
 class NewQuestion extends Component{
-
-    _isMounted = false;
-
-    componentWillUnmount() { this._isMounted = false; }
-    componentDidMount() { this._isMounted = true;}
 
     state = {
         optionOne: "",
         optionTwo: "",
         validation: null,
-        toHome: false
     }
 
     handleChange(e,option) {
@@ -29,36 +23,25 @@ class NewQuestion extends Component{
         e.preventDefault();
         const { dispatch, authedUser } = this.props;
         
-        dispatch(showLoading());
-
         if (this.state.optionOne.length <= 0 || this.state.optionTwo.length <= 0) {
             this.setState({ validation: "error" }); return;
         }
         else {
             this.setState({ validation: "success" });
         }
-
-        dispatch(handleAddNewQuestion({
+        var token = Cookies.get('id');
+        var result = await dispatch(handleAddNewQuestion({
             optionOneText: this.state.optionOne,
             optionTwoText: this.state.optionTwo,
             author: authedUser
-        }))
-            
-        if (this._isMounted) {this.setState({toHome: true})}; 
-    
-        dispatch(hideLoading());       
+        }, token))
+
+        this.props.history.push('/home');                    
         
     }
 
     render(){
-
-        const { toHome } = this.state;
-
-        if (toHome === true) {            
-            this.props.history.push('/');
-            return <p></p>
-        }
-        else
+        
         return(
             <div className='flexContainerRowCenter'>
                 <Panel className="questionPanel">

@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { handleInitialData } from '../actions/shared'
 import Nav from './Nav'
 import Question from './Question'
 import NewQuestion from './NewQuestion'
@@ -12,58 +11,42 @@ import PageNotFound from './PageNotFound'
 import PrivateRoute from './PrivateRoute'
 
 class App extends Component {
-    constructor(props) {
-        super(props);        
-        this.setState = this.setState.bind(this);
-    }
-
-    componentDidMount(){
-        this.props.dispatch(handleInitialData());
-    }
-
+  
     render() {        
-        const { authedUser, loading } = this.props;
-        
-        
+        const { redirect } = this.props;
+   
+        console.log('App props', this.props);
+        console.log('App this.state', this.state);
+        console.log('App redirect? ', redirect);
 
-        return (
-            
-            loading ?
-                (<Fragment>
-                    <Switch>                                                
-                        <Route exact path='/login' component={Login} />
-                        <Route>
-                            <Redirect to='/login' />
-                        </Route>
-                        <Route component={PageNotFound}/>
-                    </Switch>
-                </Fragment>)
-                :
-                (<Fragment>
-                    <Nav />
-                    <Switch>
-                        <PrivateRoute path='/home' exact component={QuestionList}/>
-                        <PrivateRoute path='/home/questions/:id' isHome="false" component={Question} />)} />
-                        <PrivateRoute path='/home/add' component={NewQuestion} />
-                        <PrivateRoute path='/home/leaderboard' component={LeaderBoard} />
-                        <Route component={PageNotFound}/>
+        var result =
+            redirect ?
+            (<Fragment>                
+                <Route exact path='/login' component={Login} />
+                <Redirect from='*' to='/login' />
+            </Fragment>)
+            :
+            (<Fragment>                                        
+                <Nav />
+                <Switch>
+                    <PrivateRoute path='/home' exact component={QuestionList} />
+                    <PrivateRoute path='/home/questions/:id' isHome="false" component={Question} /> />
+                    <PrivateRoute path='/home/add' component={NewQuestion} />
+                    <PrivateRoute path='/home/leaderboard' component={LeaderBoard} />                    
+                    <Route component={PageNotFound}/>
 
-                        {/* <Route path='/' exact component={QuestionList} />
-                        <Route path='/questions/:id' render={()=>(<Question isHome="false" />)} />
-                        <Route path='/add' component={NewQuestion} />
-                        <Route path='/leaderboard' component={LeaderBoard} />
-                        <Route component={PageNotFound}/>                                     */}
-                    </Switch>
-                </Fragment>)           
-            
-        );
+                </Switch>
+            </Fragment>);          
+
+        return (result);
     }
 }
 
-function mapStateToProps({ authedUser }) {    
-    return{
+function mapStateToProps({ authedUser, usersQuestionsLoadReady}) {    
+    return{        
         authedUser,
-        loading: authedUser === null || authedUser === "-1",
+        usersQuestionsLoadReady,
+        redirect: (authedUser != null && authedUser != "-1") && usersQuestionsLoadReady == true ? false : true        
     }
 }
 

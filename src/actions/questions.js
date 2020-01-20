@@ -29,23 +29,23 @@ function addQuestion(question) {
     }
 };
 
-export function handleAddNewQuestion ({ optionOneText, optionTwoText, author }) {
-    return async (dispatch, getState) => {
+export function handleAddNewQuestion ({ optionOneText, optionTwoText, author },token) {
+    return async (dispatch) => {
         var result = await saveQuestion({
             optionOneText,
             optionTwoText,
             author
-        });        
+        }, token);        
         dispatch(addQuestion(result));
         dispatch(addQuestionUser(result));
     }
 }
 
-export function handleOnSubmitQuestionAnswer(info) {
+export function handleOnSubmitQuestionAnswer(info,token) {
     return async (dispatch) => {
         dispatch(submitQuestionAnswer(info));
         dispatch(submitQuestionAnswerUser(info));
         
-        var result = await saveQuestionAnswer(info);        
+        var result = await saveQuestionAnswer(info,token);        
     }
 }

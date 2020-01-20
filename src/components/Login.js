@@ -1,38 +1,20 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
-// import { Panel, DropdownButton, MenuItem} from 'react-bootstrap'
-import { Form, FormGroup, FormControl, Button, InputGroup, Glyphicon, Grid } from 'react-bootstrap';
-// import image from '../assets/colorful_wall.jpg'
+import { Form, FormGroup, FormControl, Button, InputGroup, Glyphicon, Alert } from 'react-bootstrap';
 import { setAuthedUser } from '../actions/authedUser'
 import '../index.css';
-import { withRouter } from 'react-router-dom'
-import { Auth } from './PrivateRoute'
+import { withRouter, Redirect, history } from 'react-router-dom'
+import { handleInitialData, setUsersQuestionsLoadReady } from '../actions/shared.js'
+import Cookies from 'js-cookie'
+import {login} from '../utils/api'
+import { handleAuthenticate } from '../actions/authedUser'
 
 class Login extends Component{
 
-    // menuItems = () => {
-    //     const {dispatch, users, formerLocation} = this.props;
-        
-    //     var userIds = Object.keys(users);
-
-    //     var result = userIds.map( (id) => (
-    //         <MenuItem key={users[id]._id}
-    //             eventKey={users[id]._id}
-    //             className="selectUserMenuItem"
-    //             onSelect={()=> {
-    //                 dispatch(setAuthedUser(users[id]._id));
-    //                 this.props.history.push(formerLocation);
-    //             }}>
-    //             {users[id].name}
-    //         </MenuItem>
-    //     ))
-
-    //     return result;
-    // }
-
     state = {
         username: '',
-        password: ''
+        password: '',
+        invalidLogin: false,
     }    
 
     handleChange(e,option) {
@@ -41,22 +23,55 @@ class Login extends Component{
         });
     }    
 
-    handleSubmit(e) {
+    handleSubmit = async (e) => {
         e.preventDefault();
-        // dispatch(/*setAuthedUser(users[id]._id)*/);
+        const { users, questions, dispatch } = this.props;
         
-        // if authorized 
-        //     this.props.history.push('/');
+        var userToken = await login(this.state.username,this.state.password);
+        console.log('userToken handleSUmit:', userToken);
+        
+        
+        if (typeof userToken !== 'undefined' && userToken != null && userToken.success == true) {
+            console.log("userToken: ", userToken);
+            const {user, token} = userToken;
 
+            Cookies.set('id',token,{ expires: 1});
+            
+            dispatch(setAuthedUser(user._id));
+            
+            if(users == null || users.length == 0 || questions == null || questions.length == 0) {
+                let result = await dispatch(handleInitialData(userToken.token))                  
+                dispatch(setUsersQuestionsLoadReady(true))
+                this.props.history.push('/home');                
+            }             
+        }
+        else this.setState(()=>({invalidLogin: true}))
+        
+       
     }
 
-    render() {
+    async componentDidMount(){
+        
+        console.log("Login componentDidMount")
+        
+        const { dispatch } = this.props;             
+        var userId = await handleAuthenticate();
+        if(userId != -1){
+            dispatch(setAuthedUser(userId));
+            console.log('Login in componentdidmount');
+            var token = Cookies.get('id');                
+            dispatch(setUsersQuestionsLoadReady(true));
+            this.props.history.push('/home');
+        }
+    }
 
-        var loginForm = (
-            
+    render() {        
+
+        var loginForm = this.props.usersQuestionsLoadReady ?  (<Redirect to='/home' />) : (
+            <Fragment>
             <span className='loginFormContainer'>
                 <span className='loginFormBackground'>
-                <Form  className='loginFormItem'>
+                <Form className='loginFormItem'>                    
                     <FormGroup controlId='formEmail'>
                         <InputGroup>
                             <InputGroup.Addon><Glyphicon glyph="user" /></InputGroup.Addon>
@@ -73,45 +88,30 @@ class Login extends Component{
                         <Button type='submit' className='submitLoginBtn' onClick={this.handleSubmit}>
                             Sign in
                         </Button>
-                    </FormGroup>
+                    </FormGroup>                    
                 </Form>
-                </span>
-            </span>
-            
+                { this.state.invalidLogin &&
+                <Alert bsStyle="danger">
+                    <h4 style={{marginBottom: 0}}>Invalid login</h4>
+                </Alert>
+            }                                
+                </span>                
+            </span>            
+            </Fragment>
         );
 
         return(loginForm);
-
-        // return(
-        //     <Panel className="questionPanel container">
-        //         <Panel.Heading className="loginHeader">
-        //             <h3><b>Welcome to the Would You Rather App!</b></h3>
-        //             <h4>Please sign in to continue.</h4>
-        //         </Panel.Heading>
-        //         <Panel.Body className="signIn">
-        //             <img
-        //                 src={image}
-        //                 alt={`wall`}
-        //                 className='wallImage'
-        //             />
-
-        //             <DropdownButton title="Sign In"
-        //                 className="submitBtn selectUser"
-        //                 id="dropDown">
-        //                 {this.menuItems()}
-        //             </DropdownButton>
-        //         </Panel.Body>
-        //     </Panel>
-        // )
+    
     }
 }
 
-function mapStateToProps({authedUser, users} /*, {formerLocation}*/) {
+function mapStateToProps({authedUser, users, questions, usersQuestionsLoadReady} ) {
 
     return{
-        users,
         authedUser,
-        // formerLocation
+        users,   
+        questions,
+        usersQuestionsLoadReady        
     }
 }
 

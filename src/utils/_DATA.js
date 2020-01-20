@@ -1,9 +1,12 @@
 var url = require('./config.js');
 
-export function _getUsers () {  
+export function _getUsers (token) {  
   return fetch(url.getUsers, {
     method: 'POST',
-    cache: 'no-cache',    
+    cache: 'no-cache',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
   }).then(
     (res)=>{ return res.json() }
   )
@@ -16,10 +19,13 @@ export function _getUsers () {
   .catch((rej)=>{console.error(rej)});
 }
 
-export function _getQuestions () {
+export function _getQuestions (token) {
   return fetch(url.getQuestions, {
     method: 'POST',
     cache: 'no-cache',    
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
   }).then(
     (res)=>{ return res.json() }
   )
@@ -47,7 +53,7 @@ function formatQuestion ({ optionOneText, optionTwoText, author }) {
   }
 }
 
-export async function _saveQuestion (question) {
+export async function _saveQuestion (question,token) {
   const authedUser = question.author;
   const formattedQuestion = formatQuestion(question);
   var data = { authedUser, question: formattedQuestion };
@@ -58,7 +64,8 @@ export async function _saveQuestion (question) {
       method: 'POST',
       cache: 'no-cache',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',        
+        'Authorization': `Bearer ${token}`        
       },
       body: JSON.stringify(data)
     });
@@ -71,7 +78,7 @@ export async function _saveQuestion (question) {
   return json;
 }
 
-export async function _saveQuestionAnswer ({ authedUser, qid, answer }) {  
+export async function _saveQuestionAnswer ({ authedUser, qid, answer }, token) {  
 
   var data = { authedUser, qid, answer };    
   let json;
@@ -81,7 +88,8 @@ export async function _saveQuestionAnswer ({ authedUser, qid, answer }) {
       method: 'POST',
       cache: 'no-cache',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',        
+        'Authorization': `Bearer ${token}`        
       },
       body: JSON.stringify(data)
     })    
@@ -93,4 +101,61 @@ export async function _saveQuestionAnswer ({ authedUser, qid, answer }) {
   }    
 
   return json;  
+}
+
+export async function _validateToken(token) {
+
+  try{
+
+    const response = await fetch(url.validateToken, {
+      method: 'POST',
+      cache: 'no-store',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+    })
+    
+    var userId = {};
+    
+    if(response.status == 200){
+      var result = await response.json();        
+      userId = result ? result.id : -1;  
+    }
+    else userId = -1;    
+
+  }
+  catch(error){
+    return console.error("_validateToken error:", error)
+  }
+
+  return userId;
+
+}
+
+export async function _login(username, password) {
+
+  try{
+
+    const response = await fetch(url.login, {
+      method: 'POST',
+      cache: 'no-cache',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: username,
+        password: password,
+      }),
+    })    
+    var userToken = await response.json();
+    
+  }
+  catch(error){
+    return console.error("_login error:", error)
+  }
+
+
+  console.log('async userToken: ', userToken);
+  return userToken;
+
 }

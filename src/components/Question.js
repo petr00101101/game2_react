@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Panel, FormGroup, Radio, Button, ListGroup, ListGroupItem, ProgressBar, Badge } from 'react-bootstrap'
 import { formatQuestion } from '../utils/helpers'
 import { handleOnSubmitQuestionAnswer } from '../actions/questions'
-
+import Cookies from 'js-cookie'
 import { withRouter } from 'react-router-dom'
 
 class Question extends Component{   
@@ -14,12 +14,12 @@ class Question extends Component{
         const{dispatch, authedUser, question } = this.props;
 
         if (!document.querySelector('[name="radioGroup"]:checked')) { return null;}       
-        
+        var token = Cookies.get('id');
         dispatch(handleOnSubmitQuestionAnswer({
             authedUser: authedUser,
             qid: question.id,
             answer: document.querySelector('[name="radioGroup"]:checked').value
-        }))
+        }, token))
     }
 
     questionPreview(testStr){
@@ -139,7 +139,7 @@ class Question extends Component{
                                     <br/>                                
                                     <Button type="submit" className="submitBtn"
                                         onClick={()=>{                                        
-                                            this.props.history.push('/questions/' + question.id);
+                                            this.props.history.push('/home/questions/' + question.id);
                                     }}>
                                         View Poll
                                     </Button>
@@ -157,7 +157,7 @@ class Question extends Component{
 
 function mapStateToProps({authedUser, users, questions}, props) {
 
-    var param = props.id? props.id : props.location.pathname.slice(11);
+    var param = props.id? props.id : props.location.pathname.slice(16);
 
     const question = questions.filter( (question)=> question._id == param )[0];
     
