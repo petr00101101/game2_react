@@ -3,11 +3,10 @@ import { connect } from 'react-redux'
 import { Form, FormGroup, FormControl, Button, InputGroup, Glyphicon, Alert } from 'react-bootstrap';
 import { setAuthedUser } from '../actions/authedUser'
 import '../index.css';
-import { withRouter, Redirect, history } from 'react-router-dom'
-import { handleInitialData, setUsersQuestionsLoadReady } from '../actions/shared.js'
+import { withRouter, Redirect } from 'react-router-dom'
+import { setUsersQuestionsLoadReady, handleAuthenticate } from '../actions/shared.js'
 import Cookies from 'js-cookie'
 import {login} from '../utils/api'
-import { handleAuthenticate } from '../actions/authedUser'
 
 class Login extends Component{
 
@@ -35,12 +34,11 @@ class Login extends Component{
             console.log("userToken: ", userToken);
             const {user, token} = userToken;
 
-            Cookies.set('id',token,{ expires: 1});
+            Cookies.set('id',token);
             
             dispatch(setAuthedUser(user._id));
             
             if(users == null || users.length == 0 || questions == null || questions.length == 0) {
-                let result = await dispatch(handleInitialData(userToken.token))                  
                 dispatch(setUsersQuestionsLoadReady(true))
                 this.props.history.push('/home');                
             }             
@@ -67,7 +65,7 @@ class Login extends Component{
 
     render() {        
 
-        var loginForm = this.props.usersQuestionsLoadReady ?  (<Redirect to='/home' />) : (
+        var loginForm = this.props.usersQuestionsLoadReady == true ?  (<Redirect to='/home' />) : (
             <Fragment>
             <span className='loginFormContainer'>
                 <span className='loginFormBackground'>

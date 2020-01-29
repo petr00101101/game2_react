@@ -1,6 +1,8 @@
-import { getInitialData } from '../utils/api'
+import { getInitialData, validateToken } from '../utils/api'
 import { receiveUsers } from '../actions/users'
 import { receiveQuestions } from '../actions/questions'
+import Cookies from 'js-cookie'
+import { setAuthedUser } from './authedUser'
 
 export const SET_USERS_QUESTIONS_LOAD_READY = 'SET_USERS_QUESTIONS_LOAD_READY'
 
@@ -28,3 +30,23 @@ export function handleEmptyData() {
     }
 }
 
+export function handleLogOut() {
+    return (dispatch) => {
+        Cookies.remove('id');
+        dispatch(setAuthedUser("-1"));        
+        dispatch(handleEmptyData());        
+    }
+}
+
+export async function handleAuthenticate() {
+    console.log('in handleAuthenticate')
+    var token = Cookies.get('id');
+    console.log("token:", token);
+    if (typeof token !== 'undefined' && token) {
+        var userId = await validateToken(token);
+        console.log('authenticate userId:', userId);            
+        return userId;
+    } 
+    else return -1;        
+
+}

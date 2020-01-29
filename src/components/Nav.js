@@ -1,17 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { setAuthedUser } from '../actions/authedUser'
-import { handleEmptyData } from '../actions/shared'
-import Cookies from 'js-cookie'
+import { handleLogOut } from '../actions/shared'
 
 class Nav extends Component{
 
     handleLogout() {
         const{ dispatch } = this.props;
-        Cookies.remove('id');
-        dispatch(setAuthedUser("-1"));        
-        dispatch(handleEmptyData());
+        dispatch(handleLogOut());
     }
 
     render() {

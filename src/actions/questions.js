@@ -1,7 +1,6 @@
 import { submitQuestionAnswerUser, addQuestionUser } from './users'
 import { saveQuestionAnswer, saveQuestion } from '../utils/api'
 
-
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS'
 export const SUBMIT_QUESTION_ANSWER = 'SUBMIT_QUESTION_ANSWER'
 export const ADD_QUESTION = 'ADD_QUESTION'

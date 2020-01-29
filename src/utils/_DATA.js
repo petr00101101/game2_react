@@ -115,13 +115,12 @@ export async function _validateToken(token) {
       },
     })
     
-    var userId = {};
+    var userId = -1;
     
     if(response.status == 200){
       var result = await response.json();        
       userId = result ? result.id : -1;  
-    }
-    else userId = -1;    
+    }    
 
   }
   catch(error){
