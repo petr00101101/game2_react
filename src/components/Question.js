@@ -111,7 +111,7 @@ class Question extends Component{
                     </Panel.Heading>
                     <Panel.Body className="questionBody">
                         <img
-                            src={question.avatar}
+                            src={ require( `../assets/${question.avatar}` )}
                             alt={`Avatar of ${question.name}`}
                             className='avatar'
                         />

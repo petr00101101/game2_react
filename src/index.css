@@ -21,17 +21,29 @@ body {
     text-align: center;
 }
 
-.navcontainer, .userContainer {
+ .userContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   text-decoration: none;
 }
 
+.navcontainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-decoration: none;
+}
 
-
-.navcontainer1, .userContainer1 {
+.userContainer1 {
     display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    text-decoration: none;
+}
+
+.navcontainer1 {
+  display: flex;
     flex-direction: row;
     justify-content: flex-start;
     text-decoration: none;
@@ -49,8 +61,12 @@ body {
 }
 
 
-ul {
-  padding-left: 0;  
+.nav ul {
+  padding-left: 10px;  
+}
+
+.tab-content ul {
+  padding-left: 0px;  
 }
 
 li {
@@ -225,7 +241,7 @@ li {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100vh; 
 }
 
 .loginFormBackground {  
@@ -240,18 +256,25 @@ li {
 
 .loginFormItem {
   display: flex;   
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: column;  
   align-items: center;
+  flex-basis: 50%;
   width: 300px;
 }
 
 .submitLoginBtn {
   width: 80%;
+  height: 140%;
+  border-radius: 5px;
   border: 2px solid LightGrey;
   background-color: LightGreen;
   transition-duration: 0.4s;
   min-width: 200px;
+}
+
+.submitLoginBtn:hover {
+  background-color: #53c946;
+  
 }
 
 .navMarginBottom {

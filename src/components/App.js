@@ -16,7 +16,7 @@ class App extends Component {
         const { redirect } = this.props;
    
         console.log('App props', this.props);
-        console.log('App this.state', this.state);
+        
         console.log('App redirect? ', redirect);
 
         var result =
@@ -29,10 +29,10 @@ class App extends Component {
             (<Fragment>                                        
                 <Nav />
                 <Switch>
-                    <PrivateRoute path='/home' exact component={QuestionList} />
-                    <PrivateRoute path='/home/questions/:id' isHome="false" component={Question} /> />
-                    <PrivateRoute path='/home/add' component={NewQuestion} />
-                    <PrivateRoute path='/home/leaderboard' component={LeaderBoard} />
+                    <PrivateRoute path='/home' exact key={Date.now()} component={QuestionList} />
+                    <PrivateRoute path='/home/questions/:id' key={Date.now()} isHome="false" component={Question} /> />
+                    <PrivateRoute path='/home/add' key={Date.now()} component={NewQuestion} />
+                    <PrivateRoute path='/home/leaderboard' key={Date.now()} component={LeaderBoard} />
                     <Route component={PageNotFound}/>
                 </Switch>
             </Fragment>);          

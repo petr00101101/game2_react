@@ -1,12 +1,13 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
-import { Form, FormGroup, FormControl, Button, InputGroup, Glyphicon, Alert } from 'react-bootstrap';
+import { Form, FormGroup, FormControl, Button, InputGroup, Glyphicon, Alert, Grid, Row, Col } from 'react-bootstrap';
 import { setAuthedUser } from '../actions/authedUser'
 import '../index.css';
 import { withRouter, Redirect } from 'react-router-dom'
 import { setUsersQuestionsLoadReady, handleAuthenticate } from '../actions/shared.js'
 import Cookies from 'js-cookie'
-import {login} from '../utils/api'
+import { login } from '../utils/api'
+import { setTokenExpired } from '../actions/tokenExpired'
 
 class Login extends Component{
 
@@ -21,6 +22,12 @@ class Login extends Component{
             [option]: e.target.value
         });
     }    
+
+    handleKeyPress = (e) => {
+        if(e.key === 'Enter'){
+            this.handleSubmit(e);
+        }
+      }
 
     handleSubmit = async (e) => {
         e.preventDefault();
@@ -37,6 +44,7 @@ class Login extends Component{
             Cookies.set('id',token);
             
             dispatch(setAuthedUser(user._id));
+            dispatch(setTokenExpired(false));
             
             if(users == null || users.length == 0 || questions == null || questions.length == 0) {
                 dispatch(setUsersQuestionsLoadReady(true))
@@ -53,11 +61,13 @@ class Login extends Component{
         console.log("Login componentDidMount")
         
         const { dispatch } = this.props;             
-        var userId = await handleAuthenticate();
-        if(userId != -1){
-            dispatch(setAuthedUser(userId));
+        
+        let result = await handleAuthenticate();        
+        if(result != -1){
+            dispatch(setAuthedUser(result.id));
+            
             console.log('Login in componentdidmount');
-            var token = Cookies.get('id');                
+            
             dispatch(setUsersQuestionsLoadReady(true));
             this.props.history.push('/home');
         }
@@ -67,34 +77,82 @@ class Login extends Component{
 
         var loginForm = this.props.usersQuestionsLoadReady == true ?  (<Redirect to='/home' />) : (
             <Fragment>
-            <span className='loginFormContainer'>
-                <span className='loginFormBackground'>
-                <Form className='loginFormItem'>                    
-                    <FormGroup controlId='formEmail'>
-                        <InputGroup>
-                            <InputGroup.Addon><Glyphicon glyph="user" /></InputGroup.Addon>
-                            <FormControl type='text' placeholder='Login' onChange={(e)=>this.handleChange(e,'username')}></FormControl>
-                        </InputGroup>                    
-                    </FormGroup>
-                    <FormGroup controlId='formPassword'>
-                        <InputGroup>
-                            <InputGroup.Addon><Glyphicon glyph="pencil" /></InputGroup.Addon>
-                            <FormControl type='password' placeholder='Password' onChange={(e)=>this.handleChange(e,'password')}></FormControl>
-                        </InputGroup>
-                    </FormGroup>
-                    <FormGroup controlId='formButton'>
-                        <Button type='submit' className='submitLoginBtn' onClick={this.handleSubmit}>
-                            Sign in
-                        </Button>
-                    </FormGroup>                    
-                </Form>
-                { this.state.invalidLogin &&
-                <Alert bsStyle="danger">
-                    <h4 style={{marginBottom: 0}}>Invalid login</h4>
-                </Alert>
-            }                                
-                </span>                
-            </span>            
+                <Grid>
+                    <Row>
+                        <Col xs={12} smHidden={true} mdHidden={true} lgHidden={true}>
+                            <span className='loginFormContainer'>
+                            <Form className='loginFormItem'>                    
+                                <FormGroup controlId='formEmail'>
+                                    <InputGroup>
+                                        <InputGroup.Addon><Glyphicon glyph="user" /></InputGroup.Addon>
+                                        <FormControl type='text' placeholder='Login' onChange={(e)=>this.handleChange(e,'username')}></FormControl>
+                                    </InputGroup>                    
+                                </FormGroup>
+                                <FormGroup controlId='formPassword'>
+                                    <InputGroup>
+                                        <InputGroup.Addon><Glyphicon glyph="pencil" /></InputGroup.Addon>
+                                        <FormControl type='password' placeholder='Password' onChange={(e)=>this.handleChange(e,'password')}></FormControl>
+                                    </InputGroup>
+                                </FormGroup>
+                                <FormGroup controlId='formButton'>
+                                <Button type='submit' bsClass='submitLoginBtn' onClick={this.handleSubmit} onKeyPress={this.handleKeyPress}>
+                                        Sign in
+                                    </Button>
+                                </FormGroup>
+                                { this.state.invalidLogin &&
+                                    <Alert bsStyle="danger">
+                                        <h4 style={{marginBottom: 0}}>Invalid login</h4>
+                                    </Alert>
+                                }{  this.props.tokenExpired &&
+                                    <Alert bsStyle="info">
+                                        <h4 style={{marginBottom: 0}}>Session Timeout</h4>
+                                    </Alert>
+                                }                    
+                            </Form>
+                            </span>
+                        </Col>
+                    </Row>
+                    <Row>
+
+                        <Col s={3} md={3} lg={3} xsHidden={true}/>
+                        <Col s={6} md={6} lg={6} xsHidden={true}>
+                            <span className='loginFormContainer'>
+                            <span className='loginFormBackground'>
+                            <Form className='loginFormItem'>                    
+                                <FormGroup controlId='formEmail'>
+                                    <InputGroup>
+                                        <InputGroup.Addon><Glyphicon glyph="user" /></InputGroup.Addon>
+                                        <FormControl type='text' placeholder='Login' onChange={(e)=>this.handleChange(e,'username')}></FormControl>
+                                    </InputGroup>                    
+                                </FormGroup>
+                                <FormGroup controlId='formPassword'>
+                                    <InputGroup>
+                                        <InputGroup.Addon><Glyphicon glyph="pencil" /></InputGroup.Addon>
+                                        <FormControl type='password' placeholder='Password' onChange={(e)=>this.handleChange(e,'password')}></FormControl>
+                                    </InputGroup>
+                                </FormGroup>
+                                <FormGroup controlId='formButton'>
+                                    <Button type='submit' bsClass='submitLoginBtn' onClick={this.handleSubmit} onKeyPress={this.handleKeyPress}>
+                                        Sign in
+                                    </Button>
+                                </FormGroup>                    
+                                { this.state.invalidLogin &&
+                                    <Alert bsStyle="danger">
+                                        <h4 style={{marginBottom: 0}}>Invalid login</h4>
+                                    </Alert>
+                                }{  this.props.tokenExpired &&
+                                    <Alert bsStyle="info">
+                                        <h4 style={{marginBottom: 0}}>Session Timeout</h4>
+                                    </Alert>
+                                }
+                            </Form>
+                                                            
+                            </span>                
+                            </span>
+                        </Col>                        
+                        <Col s={3} md={3} lg={3} xsHidden={true}/>                                                
+                    </Row>
+                </Grid>
             </Fragment>
         );
 
@@ -103,13 +161,14 @@ class Login extends Component{
     }
 }
 
-function mapStateToProps({authedUser, users, questions, usersQuestionsLoadReady} ) {
+function mapStateToProps({authedUser, users, questions, usersQuestionsLoadReady, tokenExpired }) {
 
     return{
         authedUser,
         users,   
         questions,
-        usersQuestionsLoadReady        
+        usersQuestionsLoadReady,
+        tokenExpired                
     }
 }
 

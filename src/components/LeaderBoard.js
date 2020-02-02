@@ -3,16 +3,23 @@ import { connect } from 'react-redux'
 import { Panel, ListGroupItem, ListGroup } from 'react-bootstrap'
 import Cookies from 'js-cookie'
 import { handleInitialData } from '../actions/shared.js'
+import { css } from "@emotion/core";
+import PulseLoader from "react-spinners/PulseLoader";
+
+const override = css`
+  display: block;
+  margin: 0 auto;  
+  display: flex;    
+`;
 
 function User(props){
     const{user} = props;
-
+    
     return(
-
         <Panel className="questionPanel">
             <Panel.Body className="questionBody">
                 <img
-                    src={user.avatarURL}
+                    src={ require( `../assets/${user.avatarURL}` ) }
                     alt={`Avatar of ${user.name}`}
                     className='avatar'
                 />
@@ -48,21 +55,33 @@ function User(props){
             </Panel.Body>
         </Panel>
     )
+    
 }
 
 class LeaderBoard extends Component {
+
+    state={loading:true};
 
     async componentDidMount(){
         console.log('LeaderBoard componentDidMount');        
         const {dispatch} = this.props;
         var token = Cookies.get('id');
         await dispatch(handleInitialData(token));
+        this.setState(()=>({loading:false}));
     }
 
     render() {
         const{ orderedUserIds, users } = this.props;        
 
-        return(
+        var result = this.state.loading ?
+        (<span className="loginFormContainer">
+            <PulseLoader
+            css={override}
+            size={20}            
+            color={"#7ED321"}
+            loading={this.state.loading} />
+        </span>) :
+        (
             <Panel >
                 <ul>
                     { orderedUserIds.map( (id) => (
@@ -73,6 +92,9 @@ class LeaderBoard extends Component {
                 </ul>
             </Panel>
         )
+
+        return(result)
+
     }
 
 }

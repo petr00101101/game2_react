@@ -4,18 +4,37 @@ import { Tabs, Tab } from 'react-bootstrap'
 import Question from './Question'
 import Cookies from 'js-cookie'
 import { handleInitialData } from '../actions/shared.js'
+import { css } from "@emotion/core";
+import PulseLoader from "react-spinners/PulseLoader";
+
+const override = css`
+  display: block;
+  margin: 0 auto;  
+  display: flex;    
+`;
 
 class QuestionList extends Component {
 
-    async componentDidMount(){
+    state={loading:true};
+
+    async componentDidMount(){        
         console.log('QuestionList componentDidMount');
         const {dispatch} = this.props;
         var token = Cookies.get('id');
         await dispatch(handleInitialData(token));
+        this.setState(()=>({loading:false}));
     }
 
     render() {
-        return (
+        var result = this.state.loading ?
+        (<span className="loginFormContainer">
+            <PulseLoader
+            css={override}
+            size={20}            
+            color={"#7ED321"}
+            loading={this.state.loading} />
+        </span>)
+        :(
             <Tabs defaultActiveKey={1} className="tabs" id="tabs">                
                 <Tab eventKey={1} title="Unanswered Questions" >
                     <ul>
@@ -39,7 +58,9 @@ class QuestionList extends Component {
                 </Tab>
             </Tabs>
         )
+        return result;
     }
+    
 }
 
 function mapStateToProps( {questions, authedUser} ) {

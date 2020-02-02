@@ -43,9 +43,9 @@ export async function handleAuthenticate() {
     var token = Cookies.get('id');
     console.log("token:", token);
     if (typeof token !== 'undefined' && token) {
-        var userId = await validateToken(token);
-        console.log('authenticate userId:', userId);            
-        return userId;
+        var result = await validateToken(token);        
+        console.log('handleAuthenticate result : ', result);            
+        return result;
     } 
     else return -1;        
 

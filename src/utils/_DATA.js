@@ -119,16 +119,14 @@ export async function _validateToken(token) {
     
     if(response.status == 200){
       var result = await response.json();        
-      userId = result ? result.id : -1;  
+      userId = result ? result : -1;  
     }    
 
   }
   catch(error){
     return console.error("_validateToken error:", error)
-  }
-
+  }  
   return userId;
-
 }
 
 export async function _login(username, password) {
@@ -152,7 +150,6 @@ export async function _login(username, password) {
   catch(error){
     return console.error("_login error:", error)
   }
-
 
   console.log('async userToken: ', userToken);
   return userToken;

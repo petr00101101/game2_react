@@ -52,7 +52,7 @@ class Nav extends Component{
                     </span>
                 </ul>
             </nav>;
-        else result = <span>Loading</span>;
+        else result = <span></span>;
 
         return (result);
     }
