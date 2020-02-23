@@ -79,9 +79,9 @@ class Login extends Component{
             <Fragment>
                 <Grid>
                     <Row>
-                        <Col xs={12} smHidden={true} mdHidden={true} lgHidden={true}>
+                        <Col xs={12} mdHidden={true} lgHidden={true}>
                             <span className='loginFormContainer'>
-                            <Form className='loginFormItem'>                    
+                            <Form className='loginFormItemSmall'>                    
                                 <FormGroup controlId='formEmail'>
                                     <InputGroup>
                                         <InputGroup.Addon><Glyphicon glyph="user" /></InputGroup.Addon>
@@ -114,8 +114,8 @@ class Login extends Component{
                     </Row>
                     <Row>
 
-                        <Col s={3} md={3} lg={3} xsHidden={true}/>
-                        <Col s={6} md={6} lg={6} xsHidden={true}>
+                        <Col md={3} lg={3} xsHidden={true} smHidden={true}/>
+                        <Col md={6} lg={6} xsHidden={true} smHidden={true}>
                             <span className='loginFormContainer'>
                             <span className='loginFormBackground'>
                             <Form className='loginFormItem'>                    
@@ -150,7 +150,7 @@ class Login extends Component{
                             </span>                
                             </span>
                         </Col>                        
-                        <Col s={3} md={3} lg={3} xsHidden={true}/>                                                
+                        <Col md={3} lg={3} xsHidden={true} smHidden={true}/>                                                
                     </Row>
                 </Grid>
             </Fragment>
